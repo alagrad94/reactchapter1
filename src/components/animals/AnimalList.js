@@ -5,29 +5,24 @@ class AnimalList  extends Component {
 
     render() {
 
-
-        let ownerInfo = []; //Create array
-
-        this.props.owners.map(owner => {
-
-            ownerInfo.push(owner)
-            console.log(owner)
-            return ownerInfo
-        })
-
         this.props.animals.map(animal => {
 
-            let namesArray = []
+            animal.ownerNames = "";
 
             animal.owner.map(names => {
 
                 let number = names - 1
+                if (animal.ownerNames === "") {
 
-                namesArray.push(ownerInfo[number].name)
-                return namesArray
+
+                    animal.ownerNames = this.props.owners[number].name
+                } else {
+
+                    animal.ownerNames += `, ${this.props.owners[number].name}`
+
+                }
+                return animal.ownerNames
             })
-
-            animal.ownerNames = namesArray.join(", ")
 
         })
 
