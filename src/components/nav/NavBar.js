@@ -2,9 +2,10 @@ import React, { Component } from "react"
 import { Link } from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css"
 import "./NavBar.css"
-
+import Search from "./Search"
 
 class NavBar extends Component {
+
     render() {
         return (
             <nav className="navbar navbar-light light-blue flex-md-nowrap p-0 shadow">
@@ -22,6 +23,7 @@ class NavBar extends Component {
                         <Link className="nav-link" to="/owners">Owners</Link>
                     </li>
                 </ul>
+                <Link to="/searchresults"><Search jsonQuery={this.props.jsonQuery} results={this.props.results} handleInputChange={this.props.handleInputChange}/></Link>
             </nav>
         )
     }

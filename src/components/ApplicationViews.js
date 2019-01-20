@@ -4,45 +4,49 @@ import AnimalList from './animals/AnimalList'
 import LocationList from './location/LocationList'
 import EmployeeList from './employee/EmployeeList'
 import OwnerList from './owners/OwnerList'
+import SearchResults from './nav/SearchResults';
 
+export default class ApplicationViews extends Component {
 
-class ApplicationViews extends Component {
+    constructor() {
+        super();
+        this.state = {
 
-    employeesFromAPI = [
-        { id: 1, name: "Jessica Younker" },
-        { id: 2, name: "Jordan Nelson" },
-        { id: 3, name: "Zoe LeBlanc" },
-        { id: 4, name: "Blaise Roberts" }
-    ]
+                animals: [],
+                employees: [],
+                locations: [],
+                owners: []
+            }
 
-    locationsFromAPI = [
-        { id: 1, name: "Nashville North", address: "500 Circle Way" },
-        { id: 2, name: "Nashville South", address: "10101 Binary Court" }
-    ]
+        this.deleteAnimal = this.deleteAnimal.bind(this);
+    }
 
-    ownersFromAPI = [
-        { id: 1, name: "Ryan Tanay", phone: "123-456-7890"},
-        { id: 2, name: "Emma Beaton", phone: "123-456-7890"},
-        { id: 3, name: "Dani Adkins", phone: "123-456-7890"},
-        { id: 4, name: "Adam Oswalt", phone: "123-456-7890"},
-        { id: 5, name: "Fletcher Bangs", phone: "123-456-7890"},
-        { id: 6, name: "Angela Lee", phone: "123-456-7890"}
-    ]
+    deleteAnimal = id => {
+        return fetch(`http://localhost:5002/animals/${id}`, {
+            method: "DELETE"
+        })
+        .then(e => e.json())
+        .then(() => fetch(`http://localhost:5002/animals`))
+        .then(e => e.json())
+        .then(animals => this.setState({
+            animals: animals
+        })
+      )
+    }
+    componentDidMount() {
 
-    animalsFromAPI = [
-        { id: 1, name: "Doodles", owner: [1,2]},
-        { id: 2, name: "Jack", owner: [3]},
-        { id: 3, name: "Angus", owner: [3]},
-        { id: 4, name: "Henley", owner: [4,5]},
-        { id: 5, name: "Derkins", owner: [5,4]},
-        { id: 6, name: "Checkers", owner: [6]}
-    ]
-
-    state = {
-        employees: this.employeesFromAPI,
-        locations: this.locationsFromAPI,
-        animals: this.animalsFromAPI,
-        owners: this.ownersFromAPI
+        fetch("http://localhost:5002/owners")
+            .then(r => r.json())
+            .then(owners => {this.setState({owners: owners})})
+            .then(() => fetch("http://localhost:5002/locations")
+            .then(r => r.json()))
+            .then(locations => {this.setState({locations: locations})})
+            .then(() => fetch("http://localhost:5002/employees")
+            .then(r => r.json()))
+            .then(employees => {this.setState({employees: employees})})
+            .then(() => fetch("http://localhost:5002/animals")
+            .then(r => r.json()))
+            .then(animals => {this.setState({animals: animals})})
     }
 
     render() {
@@ -52,7 +56,7 @@ class ApplicationViews extends Component {
                     return <LocationList locations={this.state.locations} />
                 }} />
                 <Route path="/animals" render={(props) => {
-                    return <AnimalList animals={this.state.animals} owners={this.state.owners}/>
+                    return <AnimalList deleteAnimal={this.deleteAnimal} animals={this.state.animals} owners={this.state.owners}/>
                 }} />
                 <Route path="/employees" render={(props) => {
                     return <EmployeeList employees={this.state.employees} />
@@ -60,9 +64,10 @@ class ApplicationViews extends Component {
                 <Route path="/owners" render={(props) => {
                     return <OwnerList owners={this.state.owners} />
                 }} />
+                <Route path="/searchresults" render={(props) => {
+                    return <SearchResults jsonQuery={this.props.jsonQuery} results={this.props.results} handleInputChange={this.props.handleInputChange}/>
+                }} />
             </React.Fragment>
         )
     }
 }
-
-export default ApplicationViews
