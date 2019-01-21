@@ -6,6 +6,10 @@ import EmployeeList from './employee/EmployeeList'
 import OwnerList from './owners/OwnerList'
 import SearchResults from './nav/SearchResults';
 import APIManager from "../modules/apiManager";
+import AnimalDetail from './animals/animalDetail';
+import LocationDetail from './location/locationDetail';
+import EmployeeDetail from './employee/employeeDetail';
+import OwnerDetail from './owners/ownerDetail';
 
 export default class ApplicationViews extends Component {
 
@@ -60,16 +64,28 @@ export default class ApplicationViews extends Component {
                 <Route exact path="/" render={(props) => {
                     return <LocationList locations={this.state.locations} />
                 }} />
-                <Route path="/animals" render={(props) => {
+                <Route path="/locations/:locationId(\d+)" render={(props) => {
+                    return <LocationDetail {...props} locations={this.state.locations} />
+                }} />
+                <Route exact path="/animals" render={(props) => {
                     return <AnimalList animals={this.state.animals} owners={this.state.owners} deleteAnimal={this.deleteAnimal} />
                 }} />
-                <Route path="/employees" render={(props) => {
+                <Route path="/animals/:animalId(\d+)" render={(props) => {
+                    return <AnimalDetail {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
+                }} />
+                <Route exact path="/employees" render={(props) => {
                     return <EmployeeList deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
                 }} />
-                <Route path="/owners" render={(props) => {
+                <Route path="/employees/:employeeId(\d+)" render={(props) => {
+                    return <EmployeeDetail {...props} deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
+                }} />
+                <Route exact path="/owners" render={(props) => {
                     return <OwnerList deleteOwner={this.deleteOwner} owners={this.state.owners} />
                 }} />
-                <Route path="/searchresults" render={(props) => {
+                <Route path="/owners/:ownerId(\d+)" render={(props) => {
+                    return <OwnerDetail {...props} deleteOwner={this.deleteOwner} owners={this.state.owners} />
+                }} />
+                <Route exact path="/searchresults" render={(props) => {
                     return <SearchResults jsonQuery={this.props.jsonQuery} results={this.props.results} handleInputChange={this.props.handleInputChange}/>
                 }} />
             </React.Fragment>

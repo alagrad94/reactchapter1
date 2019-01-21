@@ -61,18 +61,21 @@
     {
       "id": 1,
       "name": "Jack",
+      "breed": "Laborador Retriever",
       "owner": [
         1
       ]
     },{
       "id": 2,
       "name": "Boomer",
+      "breed": "Beagle",
       "owner": [
         2
       ]
     },{
       "id": 3,
       "name": "Mick",
+      "breed": "Laborador Retriever",
       "owner": [
         2
       ]
@@ -80,6 +83,7 @@
     {
       "id": 4,
       "name": "Henley",
+      "breed": "Golden Retriever",
       "owner": [
         3,
         4
@@ -88,6 +92,7 @@
     {
       "id": 5,
       "name": "Derkins",
+      "breed": "Border Collie",
       "owner": [
         5
       ]
@@ -95,6 +100,7 @@
     {
       "id": 6,
       "name": "Checkers",
+      "breed": "Austrailian Healer",
       "owner": [
         6
       ]
