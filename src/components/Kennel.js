@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import NavBar from "./nav/NavBar"
 import ApplicationViews from "./ApplicationViews"
+import APIManager from '../modules/apiManager'
 
 import "./Kennel.css"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -44,18 +45,14 @@ class Kennel extends Component {
             locationsResults: []
         }
 
-        fetch(`http://localhost:5002/owners?q=${this.state.jsonQuery}`)
-            .then(r => r.json())
-            .then(owners => {results.ownersResults = owners})
-            .then(() => fetch(`http://localhost:5002/locations?q=${this.state.jsonQuery}`)
-            .then(r => r.json()))
-            .then(locations => {results.locationsResults = locations})
-            .then(() => fetch(`http://localhost:5002/employees?q=${this.state.jsonQuery}`)
-            .then(r => r.json()))
-            .then(employees => {results.employeesResults = employees})
-            .then(() => fetch(`http://localhost:5002/animals?q=${this.state.jsonQuery}`)
-            .then(r => r.json()))
-            .then(animals => {results.animalsResults = animals; this.setState({results: results})})
+        APIManager.connectToData({dataSet: 'owners', fetchType: 'GET', embedItem: `?q=${this.state.jsonQuery}`})
+        .then(owners => {results.ownersResults = owners})
+        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: `?q=${this.state.jsonQuery}`}))
+        .then(animals => {results.animalsResults = animals})
+        .then(() => APIManager.connectToData({dataSet: 'locations', fetchType: 'GET', embedItem: `?q=${this.state.jsonQuery}`}))
+        .then(locations => {results.locationsResults = locations})
+        .then(() => APIManager.connectToData({dataSet: 'employees', fetchType: 'GET', embedItem: `?q=${this.state.jsonQuery}`}))
+        .then(employees => {results.employeesResults = employees; this.setState({results: results})})
 
     }
 

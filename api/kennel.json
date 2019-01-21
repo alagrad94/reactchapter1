@@ -27,60 +27,69 @@
   ],
   "owners": [
     {
-      "id": 2,
+      "id": 1,
       "name": "Emma Beaton",
       "phone": "123-456-7890"
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "Dani Adkins",
       "phone": "123-456-7890"
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Adam Oswalt",
       "phone": "123-456-7890"
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Fletcher Bangs",
       "phone": "123-456-7890"
     },
     {
+      "id": 5,
+      "name": "Emma Bennet",
+      "phone": "123-456-7890"
+    },
+    {
       "id": 6,
-      "name": "Angela Lee",
+      "name": "Ryan Tanay",
       "phone": "123-456-7890"
     }
   ],
   "animals": [
     {
-      "id": 2,
+      "id": 1,
       "name": "Jack",
       "owner": [
-        3
+        1
       ]
-    },
-    {
-      "id": 3,
-      "name": "Angus",
+    },{
+      "id": 2,
+      "name": "Boomer",
       "owner": [
-        3
+        2
+      ]
+    },{
+      "id": 3,
+      "name": "Mick",
+      "owner": [
+        2
       ]
     },
     {
       "id": 4,
       "name": "Henley",
       "owner": [
-        4,
-        5
+        3,
+        4
       ]
     },
     {
       "id": 5,
       "name": "Derkins",
       "owner": [
-        5,
-        4
+        5
       ]
     },
     {

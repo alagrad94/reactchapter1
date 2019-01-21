@@ -11,20 +11,25 @@ export default class AnimalList  extends Component {
 
         this.props.animals.map(animal => {
 
+            let validOwners = [];
             animal.ownerNames = "";
-            console.log(this.props.owners[0])
-            animal.owner.map(names => {
+            this.props.owners.forEach(owner => {
+                validOwners.push(owner.id)
+            });
 
-                let number = names - 1
-                if (animal.ownerNames === "") {
+            animal.owner.map(ownerId => {
 
-                    animal.ownerNames = this.props.owners[number].name
+                let number = ownerId - 1
+
+                if (validOwners.includes(ownerId)) {
+
+
+                    (animal.ownerNames === "") ? animal.ownerNames = this.props.owners[number].name : animal.ownerNames += `, ${this.props.owners[number].name}`
+
                 } else {
-
-                    animal.ownerNames += `, ${this.props.owners[number].name}`
-
+                    animal.ownerNames = '';
                 }
-                console.log(animal.ownerNames)
+
                 return animal.ownerNames
             })
 
