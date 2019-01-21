@@ -1,16 +1,20 @@
 {
   "employees": [
     {
-      "id": 2,
+      "id": 1,
       "name": "Jordan Nelson"
     },
     {
-      "id": 3,
+      "id": 2,
       "name": "Zoe LeBlanc"
     },
     {
-      "id": 4,
+      "id": 3,
       "name": "Blaise Roberts"
+    },
+    {
+      "name": "Russ Reiter",
+      "id": 4
     }
   ],
   "locations": [
@@ -55,27 +59,37 @@
       "id": 6,
       "name": "Ryan Tanay",
       "phone": "123-456-7890"
+    },
+    {
+      "name": "Jordan Rosas",
+      "phone": "123-456-0101",
+      "id": 7
     }
   ],
   "animals": [
     {
       "id": 1,
       "name": "Jack",
-      "breed": "Laborador Retriever",
+      "breed": "Mutt",
+      "employeeId": 1,
       "owner": [
         1
       ]
-    },{
+    },
+    {
       "id": 2,
       "name": "Boomer",
       "breed": "Beagle",
+      "employeeId": 1,
       "owner": [
         2
       ]
-    },{
+    },
+    {
       "id": 3,
       "name": "Mick",
       "breed": "Laborador Retriever",
+      "employeeId": 1,
       "owner": [
         2
       ]
@@ -84,6 +98,7 @@
       "id": 4,
       "name": "Henley",
       "breed": "Golden Retriever",
+      "employeeId": 1,
       "owner": [
         3,
         4
@@ -91,8 +106,9 @@
     },
     {
       "id": 5,
-      "name": "Derkins",
-      "breed": "Border Collie",
+      "name": "Fred",
+      "breed": "Husky",
+      "employeeId": 1,
       "owner": [
         5
       ]
@@ -101,6 +117,7 @@
       "id": 6,
       "name": "Checkers",
       "breed": "Austrailian Healer",
+      "employeeId": 1,
       "owner": [
         6
       ]

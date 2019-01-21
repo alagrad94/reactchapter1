@@ -1,9 +1,20 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 class OwnerList  extends Component {
     render() {
         return (
+            <React.Fragment>
+            <Link to='/owners/new'>
+            <div className="ownerButton">
+                <button type="button"
+                        className="btn btn-success"
+                        onClick={<Redirect to="/owners/new"></Redirect>
+                        }>
+                    Add Owner
+                </button>
+            </div>
+            </Link>
             <section className="owners">
             {
                 this.props.owners.map(owner =>
@@ -17,6 +28,7 @@ class OwnerList  extends Component {
                 )
             }
             </section>
+            </React.Fragment>
         );
     }
 }

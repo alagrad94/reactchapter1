@@ -11,8 +11,6 @@ export default {
       let putId = fetchObject.putId;
       let deleteId = fetchObject.deleteId;
 
-      console.log(dataSet, fetchType)
-
       if (fetchType == "GET") {
 
       return fetch(`${remoteURL}/${dataSet}${embedItem}`)

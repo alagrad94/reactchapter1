@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 
 class EmployeeList  extends Component {
     render() {
         return (
+            <React.Fragment>
+            <Link to='/employees/new'>
+            <div className="employeeButton">
+                <button type="button"
+                        className="btn btn-success"
+                        onClick={<Redirect to="/employees/new"></Redirect>
+                        }>
+                    Add Employee
+                </button>
+            </div>
+            </Link>
             <section className="employees">
             {
                 this.props.employees.map(employee =>
@@ -18,6 +29,7 @@ class EmployeeList  extends Component {
                 )
             }
             </section>
+            </React.Fragment>
         );
     }
 }

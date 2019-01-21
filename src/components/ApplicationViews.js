@@ -10,6 +10,10 @@ import AnimalDetail from './animals/animalDetail';
 import LocationDetail from './location/locationDetail';
 import EmployeeDetail from './employee/employeeDetail';
 import OwnerDetail from './owners/ownerDetail';
+import AnimalForm from './animals/animalForm';
+import OwnerForm from './owners/ownerForm';
+import EmployeeForm from './employee/employeeForm';
+import AnimalEditForm from './animals/animalEditForm';
 
 export default class ApplicationViews extends Component {
 
@@ -24,21 +28,50 @@ export default class ApplicationViews extends Component {
             }
 
         this.deleteAnimal = this.deleteAnimal.bind(this);
-        this.deleteEmployee = this.deleteEmployee.bind(this)
+        this.deleteEmployee = this.deleteEmployee.bind(this);
+        this.deleteEmployee = this.deleteOwner.bind(this);
+        this.addAnimal = this.addAnimal.bind(this);
+        this.addOwner = this.addOwner.bind(this);
+        this.addEmployee = this.addEmployee.bind(this)
+        this.editAnimal = this.editAnimal.bind(this)
     }
 
     deleteAnimal = id => {
+
         APIManager.connectToData({dataSet: 'animals', fetchType: 'DELETE', deleteId: id})
-        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: ""}))
+        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: "?_expand=employee"}))
         .then(animals => {this.setState({animals: animals})})
     }
 
+    addAnimal (newAnimal) {
+        APIManager.connectToData({dataSet: "animals", fetchType: "POST", dataBaseObject: newAnimal})
+        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: "?_expand=employee"}))
+        .then(animals => {this.setState({animals: animals})})
+    }
+
+    editAnimal(animal) {
+        console.log(animal)
+        APIManager.connectToData({dataSet: "animals", fetchType: "PUT", dataBaseObject: animal, putId: animal.id})
+        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: "?_expand=employee"}))
+        .then(animals => {this.setState({animals: animals})})
+    }
+    addEmployee (newEmployee) {
+        console.log(newEmployee)
+        APIManager.connectToData({dataSet: "employees", fetchType: "POST", dataBaseObject: newEmployee})
+        .then(() => APIManager.connectToData({dataSet: 'employees', fetchType: 'GET', embedItem: ""}))
+        .then(employees => {this.setState({employees: employees})})
+    }
     deleteEmployee = id => {
         APIManager.connectToData({dataSet: 'employees', fetchType: 'DELETE', deleteId: id})
         .then(() => APIManager.connectToData({dataSet: 'employees', fetchType: 'GET', embedItem: ""}))
         .then(employees => {this.setState({employees: employees})})
     }
 
+    addOwner (newOwner) {
+        APIManager.connectToData({dataSet: "owners", fetchType: "POST", dataBaseObject: newOwner})
+        .then(() => APIManager.connectToData({dataSet: 'owners', fetchType: 'GET', embedItem: ""}))
+        .then(owners => {this.setState({owners: owners})})
+    }
     deleteOwner = id => {
 
         APIManager.connectToData({dataSet: 'owners', fetchType: 'DELETE', deleteId: id})
@@ -50,7 +83,7 @@ export default class ApplicationViews extends Component {
 
         APIManager.connectToData({dataSet: 'owners', fetchType: 'GET', embedItem: ""})
         .then(owners => {this.setState({owners: owners})})
-        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: ""}))
+        .then(() => APIManager.connectToData({dataSet: 'animals', fetchType: 'GET', embedItem: "?_expand=employee"}))
         .then(animals => {this.setState({animals: animals})})
         .then(() => APIManager.connectToData({dataSet: 'locations', fetchType: 'GET', embedItem: ""}))
         .then(locations => {this.setState({locations: locations})})
@@ -68,10 +101,16 @@ export default class ApplicationViews extends Component {
                     return <LocationDetail {...props} locations={this.state.locations} />
                 }} />
                 <Route exact path="/animals" render={(props) => {
-                    return <AnimalList animals={this.state.animals} owners={this.state.owners} deleteAnimal={this.deleteAnimal} />
+                    return <AnimalList animals={this.state.animals} owners={this.state.owners} employees={this.state.employees} deleteAnimal={this.deleteAnimal} />
+                }} />
+                 <Route path="/animals/new" render={(props) => {
+                    return <AnimalForm {...props} addAnimal={this.addAnimal} employees={this.state.employees} owners={this.state.owners}/>
                 }} />
                 <Route path="/animals/:animalId(\d+)" render={(props) => {
-                    return <AnimalDetail {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} />
+                    return <AnimalDetail {...props} deleteAnimal={this.deleteAnimal} animals={this.state.animals} employees={this.state.employees} owners={this.state.owners}/>
+                }} />
+                <Route path="/animals/edit/" render={(props) => {
+                    return <AnimalEditForm {...props} editAnimal={this.editAnimal} animals={this.state.animals} employees={this.state.employees} owners={this.state.owners}/>
                 }} />
                 <Route exact path="/employees" render={(props) => {
                     return <EmployeeList deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
@@ -79,8 +118,14 @@ export default class ApplicationViews extends Component {
                 <Route path="/employees/:employeeId(\d+)" render={(props) => {
                     return <EmployeeDetail {...props} deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
                 }} />
+                <Route path="/employees/new" render={(props) => {
+                    return <EmployeeForm {...props} addEmployee={this.addEmployee} employees={this.state.employees}/>
+                }} />
                 <Route exact path="/owners" render={(props) => {
                     return <OwnerList deleteOwner={this.deleteOwner} owners={this.state.owners} />
+                }} />
+                <Route path="/owners/new" render={(props) => {
+                    return <OwnerForm {...props} addOwner={this.addOwner} owners={this.state.owners}/>
                 }} />
                 <Route path="/owners/:ownerId(\d+)" render={(props) => {
                     return <OwnerDetail {...props} deleteOwner={this.deleteOwner} owners={this.state.owners} />
