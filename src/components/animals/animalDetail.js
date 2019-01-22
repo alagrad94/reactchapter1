@@ -14,6 +14,7 @@ export default class AnimalDetail extends Component {
         this.props.deleteAnimal(id)
         this.setState({redirectToAnimals: true})
     }
+
     render() {
 
         const animal = this.props.animals.find(a => a.id === parseInt(this.props.match.params.animalId)) || {}

@@ -101,7 +101,7 @@ export default class ApplicationViews extends Component {
             <React.Fragment>
                 <Route exact path="/" render={props => {
                     if (this.isAuthenticated()) {
-                    return <LocationList locations={this.state.locations} />
+                    return <LocationList locations={this.state.locations} employees={this.state.employees} animals={this.state.animals} owners={this.state.owners} />
                     } else {
                         return <Redirect to='/login' />
                     }}} />
@@ -120,7 +120,7 @@ export default class ApplicationViews extends Component {
                     return <AnimalEditForm {...props} editAnimal={this.editAnimal} animals={this.state.animals} employees={this.state.employees} owners={this.state.owners}/>}} />
                 <Route exact path="/employees" render={props => {
                     if (this.isAuthenticated()) {
-                        return <EmployeeList deleteEmployee={this.deleteEmployee} employees={this.state.employees} />
+                        return <EmployeeList deleteEmployee={this.deleteEmployee} employees={this.state.employees} animals={this.state.animals} />
                     } else {
                        return <Redirect to='/login' />
                     }}}/>
